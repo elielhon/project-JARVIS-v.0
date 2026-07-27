@@ -1,0 +1,18 @@
+# Ambiente virtual
+venv/
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Banco de dados
+database/sentinel.db
+
+# Configurações do VS Code
+.vscode/
+
+# Arquivos de log
+*.log
+
+# Variáveis de ambiente
+.env
