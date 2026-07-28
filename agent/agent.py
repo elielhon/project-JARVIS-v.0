@@ -3,8 +3,7 @@ import platform
 import time
 import requests
 
-
-API_URL = "http://127.0.0.1:8000/metrics"
+from config.config import METRICS_ENDPOINT, AGENT_INTERVAL
 
 
 def coletar_dados():
@@ -23,11 +22,17 @@ while True:
 
     dados = coletar_dados()
 
+try:
     resposta = requests.post(
-        API_URL,
-        json=dados
+        METRICS_ENDPOINT,
+        json=dados,
+        timeout=5
     )
 
+    print("✔ Dados enviados com sucesso!")
     print(resposta.json())
 
-    time.sleep(5)
+except requests.exceptions.RequestException as erro:
+    print(f"✘ Erro ao enviar dados: {erro}")
+
+    time.sleep(AGENT_INTERVAL)

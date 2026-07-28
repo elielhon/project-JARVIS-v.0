@@ -1,19 +1,12 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from datetime import datetime
 
+from api.routes.metrics import router as metrics_router
+from api.routes.status import router as status_router
 
 app = FastAPI(
     title="Sentinel",
     version="0.1"
 )
-
-
-class Metric(BaseModel):
-    cpu: float
-    ram: float
-    disco: float
-    sistema: str
 
 
 @app.get("/")
@@ -25,18 +18,5 @@ def home():
     }
 
 
-@app.get("/status")
-def status():
-    return {
-        "cpu": "exemplo"
-    }
-
-
-@app.post("/metrics")
-def receber_metricas(metric: Metric):
-
-    return {
-        "recebido": True,
-        "dados": metric,
-        "horario": datetime.now()
-    }
+app.include_router(status_router)
+app.include_router(metrics_router)
